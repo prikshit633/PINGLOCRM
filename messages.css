@@ -1,0 +1,16 @@
+.template-send{min-height:32px;padding:7px 10px;font-size:10px;white-space:nowrap;box-shadow:none}
+.message-modal{width:min(100%,520px)}
+#message-modal .profile-modal-intro{margin:-6px 0 18px;line-height:1.55}
+#message-body{min-height:150px;line-height:1.55}
+#open-whatsapp-message:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+#open-whatsapp-message:disabled:hover{background:var(--green)}
+html[data-color-scheme="dark"] #message-body:disabled{background:#202a22;color:#89968a}
+@media(max-width:620px){
+  .template-send{min-height:34px;padding:7px 9px;font-size:9px}
+  .message-modal{width:100%}
+  #message-body{min-height:130px}
+}
+.message-send-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.message-send-link[aria-disabled="true"]{opacity:.5;pointer-events:none;cursor:not-allowed;transform:none;box-shadow:none}
+.message-error{color:var(--rose-ink)!important}
+html[data-color-scheme="dark"] .message-error{color:#ffb9aa!important}
