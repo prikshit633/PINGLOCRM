@@ -1,0 +1,18 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+supabase/.temp/
+
+# Build output and dependencies
+node_modules/
+dist/
+.wrangler/
+
+# Local screenshots and backup copies
+oauth-setup-*.png
+*.before-*.bak
+
+# Operating system files
+.DS_Store
+Thumbs.db
