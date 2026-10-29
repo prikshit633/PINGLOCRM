@@ -1,0 +1,10 @@
+/* Pinglo handwritten logo — transparent PNG with black ink.
+   On dark/green surfaces it is inverted to white ink. */
+.brand-logo{display:block;height:34px;width:auto;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.brand{align-items:center;gap:10px}
+.brand small{display:block;margin-top:2px}
+.mobile-brand .brand-logo{height:30px}
+.auth-brand .brand-logo{height:46px}
+.brand-logo-light,
+html[data-color-scheme="dark"] .brand-logo{filter:invert(1)}
+@media(max-width:620px){.auth-brand .brand-logo{height:38px}}
