@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f7f2" />
+  <title>Pinglo — Customer follow-ups</title>
+  <link rel="icon" type="image/png" href="assets/pinglo-logo-transparent.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261008" />
+  <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="themes.css?v=20261008" />
+  <link rel="stylesheet" href="messages.css?v=20261008-2" />
+  <link rel="stylesheet" href="auth.css?v=20261019-1" />
+  <link rel="stylesheet" href="mobile-nav.css?v=20261017" />
+  <link rel="stylesheet" href="brand.css?v=20261018" />
+</head>
+<body class="auth-gated">
+  <section class="auth-screen" id="auth-screen" aria-labelledby="auth-title">
+    <div class="auth-layout">
+      <div class="auth-story">
+        <a class="auth-brand" href="#" aria-label="Pinglo home">
+          <img class="brand-logo brand-logo-light" src="assets/pinglo-logo-transparent.png" alt="Pinglo" />
+        </a>
+        <div class="auth-story-copy">
+          <p class="auth-eyebrow">A LITTLE CLOSER TO EVERY CUSTOMER</p>
+          <h1>Keep customer conversations moving.</h1>
+          <p>Thoughtful follow-ups, familiar faces, and a little more time for the work you love.</p>
+        </div>
+        <div class="auth-story-footer"><span class="auth-story-dot"></span>Simple tools for everyday business</div>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-card">
+          <div class="auth-card-top"><span class="auth-card-icon">✳</span><span>YOUR WORKSPACE</span></div>
+          <p class="eyebrow auth-card-eyebrow">WELCOME TO PINGLO</p>
+          <h2 id="auth-title">Welcome back</h2>
+          <p class="auth-description" id="auth-description">Sign in to continue.</p>
+          <div class="auth-social">
+            <button class="auth-google" type="button" id="auth-google"><span class="google-g" aria-hidden="true">G</span>Continue with Google</button>
+            <button class="auth-apple" type="button" id="auth-apple"><svg class="apple-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.365 1.43c0 1.14-.437 2.232-1.244 3.048-.834.846-2.21 1.49-3.352 1.4-.154-1.273.404-2.61 1.22-3.43.85-.86 2.32-1.48 3.376-1.518zm4.355 15.87c-.48 1.105-.706 1.596-1.32 2.574-1.02 1.62-2.457 3.64-4.23 3.655-1.575.016-1.982-1.027-4.12-1.014-2.14.014-2.59 1.033-4.167 1.017-1.775-.016-3.132-1.84-4.152-3.457C1.96 16.54.46 11.58 2.3 8.25c1.03-1.87 2.87-3.05 4.86-3.05 1.81 0 2.95 1.04 4.45 1.04 1.46 0 2.35-1.04 4.45-1.04 1.58 0 3.25.86 4.43 2.34-3.89 2.13-3.26 7.68.79 9.76z"/></svg>Continue with Apple</button>
+          </div>
+          <div class="auth-divider"><span>or use email</span></div>
+          <form id="auth-form">
+            <label class="auth-field" for="auth-email">Email address<input id="auth-email" name="email" type="email" autocomplete="email" placeholder="you@business.com" required /></label>
+            <div class="auth-password-row"><label class="auth-field" for="auth-password">Password<input id="auth-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="8" required /></label><button class="auth-forgot" type="button" id="auth-forgot">Forgot password?</button></div>
+            <button class="button-primary auth-submit" type="submit" id="auth-submit">Sign in</button>
+          </form>
+          <p class="auth-status" id="auth-status" role="status" aria-live="polite">Sign in or create an account to sync your workspace.</p>
+          <p class="auth-switch"><span id="auth-switch-copy">New to Pinglo?</span> <button type="button" id="auth-mode-toggle">Create an account</button></p>
+        </div>
+        <p class="auth-privacy">Your business data is private to your account.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard" aria-label="Pinglo home">
+        <img class="brand-logo" src="assets/pinglo-logo-transparent.png" alt="Pinglo" />
+        <span><small>Customer follow-ups</small></span>
+      </a>
+      <div class="workspace-label">Workspace</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-page="dashboard"><span class="nav-icon">◫</span>Overview</button>
+        <button class="nav-link" data-page="customers"><span class="nav-icon">♧</span>Customers<span class="nav-count" id="nav-customer-count">9</span></button>
+        <button class="nav-link" data-page="templates"><span class="nav-icon">▤</span>Message templates</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="tip-card"><span class="tip-spark">✳</span><strong>Small steps,<br/>strong relationships.</strong><p>A little follow-up goes a long way.</p></div>
+        <div class="profile">
+          <div class="avatar avatar-owner" id="profile-avatar">AS</div>
+          <div class="profile-copy"><strong id="profile-business-name">Asha's Boutique</strong><small id="profile-owner-label">Owner · Asha</small></div>
+          <button class="profile-dots" id="profile-menu-button" aria-label="Open business profile" aria-haspopup="true" aria-expanded="false" title="Business profile">···</button>
+          <div class="profile-menu hidden" id="profile-menu" aria-labelledby="profile-menu-button">
+            <p class="profile-menu-eyebrow">Business profile</p>
+            <strong class="profile-menu-name" id="profile-menu-business">Asha's Boutique</strong>
+            <span class="profile-menu-owner" id="profile-menu-owner">Asha · Business owner</span>
+            <div class="profile-theme">
+              <span class="profile-theme-label">Appearance</span>
+              <div class="theme-options" role="group" aria-label="Appearance mode">
+                <button class="theme-choice" data-theme="light" aria-pressed="false">Light</button>
+                <button class="theme-choice" data-theme="dark" aria-pressed="false">Dark</button>
+                <button class="theme-choice" data-theme="system" aria-pressed="false">System</button>
+              </div>
+            </div>
+            <label class="profile-language" for="language-select"><span class="profile-theme-label">Language</span>
+              <select id="language-select" aria-label="Language">
+                <option value="en">English</option>
+                <option value="as">অসমীয়া</option>
+                <option value="bn">বাংলা</option>
+                <option value="brx">बड़ो</option>
+                <option value="doi">डोगरी</option>
+                <option value="gu">ગુજરાતી</option>
+                <option value="hi">हिन्दी</option>
+                <option value="kn">ಕನ್ನಡ</option>
+                <option value="ks">کٲشُر</option>
+                <option value="kok">कोंकणी</option>
+                <option value="mai">मैथिली</option>
+                <option value="ml">മലയാളം</option>
+                <option value="mni">মৈতৈলোন্</option>
+                <option value="mr">मराठी</option>
+                <option value="ne">नेपाली</option>
+                <option value="or">ଓଡ଼ିଆ</option>
+                <option value="pa">ਪੰਜਾਬੀ</option>
+                <option value="sa">संस्कृतम्</option>
+                <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ</option>
+                <option value="sd">سنڌي</option>
+                <option value="ta">தமிழ்</option>
+                <option value="te">తెలుగు</option>
+                <option value="ur">اردو</option>
+              </select>
+            </label>
+            <button class="profile-menu-action" id="edit-profile-button"><span>✎</span> Edit profile</button>
+            <button class="profile-menu-action auth-signout" id="demo-sign-out"><span>↪</span> Back to sign in</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="mobile-brand"><img class="brand-logo" src="assets/pinglo-logo-transparent.png" alt="Pinglo" /></div>
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="crumb-current">Overview</strong></div>
+        <div class="topbar-actions"><span class="today-label" id="today-label"></span><button class="icon-button" id="help-button" aria-label="About Pinglo" title="About">?</button><button class="add-button" id="top-add"><span>＋</span> Add customer</button><button class="avatar avatar-owner mobile-profile-button" id="mobile-profile-button" aria-label="Open business profile" aria-haspopup="true" aria-expanded="false" title="Business profile">AS</button></div>
+      </header>
+
+      <div class="page-wrap">
+        <section class="page active-page" id="page-dashboard">
+          <div class="welcome-row"><div><p class="eyebrow">YOUR BUSINESS, AT A GLANCE</p><h1 id="welcome-title">Welcome back, Asha <span class="wave">✳</span></h1><p class="page-intro">A few thoughtful follow-ups can make someone's day.</p></div><button class="button-primary mobile-add" id="mobile-add"><span>＋</span> Add customer</button></div>
+          <div class="stats-grid">
+            <button class="stat-card stat-today" data-filter="today"><span class="stat-top"><span class="stat-icon icon-sand">◷</span><span class="stat-link">View list ↗</span></span><strong id="stat-today">0</strong><span class="stat-label">Today's follow-ups</span><span class="stat-foot"><span class="tiny-dot dot-green"></span> Keep the conversation going</span></button>
+            <button class="stat-card stat-overdue" data-filter="overdue"><span class="stat-top"><span class="stat-icon icon-rose">↺</span><span class="stat-link">View list ↗</span></span><strong id="stat-overdue">0</strong><span class="stat-label">Overdue</span><span class="stat-foot"><span class="tiny-dot dot-rose"></span> Pick up where you left off</span></button>
+            <button class="stat-card stat-leads" data-filter="new"><span class="stat-top"><span class="stat-icon icon-lilac">✳</span><span class="stat-link">View list ↗</span></span><strong id="stat-leads">0</strong><span class="stat-label">New leads</span><span class="stat-foot"><span class="tiny-dot dot-lilac"></span> People getting to know you</span></button>
+            <button class="stat-card stat-active" data-filter="active"><span class="stat-top"><span class="stat-icon icon-mint">♡</span><span class="stat-link">View list ↗</span></span><strong id="stat-active">0</strong><span class="stat-label">Active customers</span><span class="stat-foot"><span class="tiny-dot dot-green"></span> Your growing community</span></button>
+          </div>
+          <div class="section-heading"><div><p class="eyebrow">STAY IN THE LOOP</p><h2 id="dashboard-list-heading">Follow-ups</h2></div><button class="text-button" id="see-all-followups">See all customers <span>→</span></button></div>
+          <div class="followup-panel">
+            <div class="panel-toolbar"><div class="filter-tabs" role="tablist" aria-label="Overview lists"><button class="filter-tab active" data-followup-filter="all">All <span id="count-all">0</span></button><button class="filter-tab" data-followup-filter="overdue">Overdue <span id="count-overdue">0</span></button><button class="filter-tab" data-followup-filter="today">Today <span id="count-today">0</span></button><button class="filter-tab" data-followup-filter="upcoming">Upcoming <span id="count-upcoming">0</span></button><button class="filter-tab" data-followup-filter="new">New leads <span id="count-new">0</span></button><button class="filter-tab" data-followup-filter="active">Active <span id="count-active">0</span></button></div><label class="search-box"><span>⌕</span><input id="dashboard-search" type="search" placeholder="Find a customer" aria-label="Search customers" /></label></div>
+            <div class="followup-list" id="dashboard-followups"></div>
+            <div class="empty-state hidden" id="dashboard-empty"><span class="empty-icon">☀</span><strong id="dashboard-empty-title">All caught up</strong><p id="dashboard-empty-copy">No follow-ups in this view. Enjoy the breathing room.</p><button class="text-button" id="empty-add">Add a customer →</button></div>
+          </div>
+          <div class="bottom-note"><span class="note-icon">✦</span><span><strong>A friendly reminder:</strong> A personal message always feels better than a broadcast.</span></div>
+        </section>
+
+        <section class="page" id="page-customers">
+          <div class="page-title-row"><div><p class="eyebrow">YOUR CUSTOMER BOOK</p><h1>Customers <span class="title-count" id="customer-total">0</span></h1><p class="page-intro">Keep every conversation and next step in one place.</p></div><button class="button-primary" id="customer-add"><span>＋</span> Add customer</button></div>
+          <div class="customer-controls"><label class="search-box customer-search"><span>⌕</span><input id="customer-search" type="search" placeholder="Search name or phone" aria-label="Search name or phone" /></label><label class="select-wrap"><span class="sr-only">Filter by status</span><select id="status-filter"><option value="all">All statuses</option><option value="active">Active customers</option><option value="New">New</option><option value="Contacted">Contacted</option><option value="Interested">Interested</option><option value="Confirmed">Confirmed</option><option value="Completed">Completed</option></select></label></div>
+          <div class="customer-list" id="customer-list"></div>
+          <div class="empty-state hidden customer-empty" id="customer-empty"><span class="empty-icon">♡</span><strong>No customers found</strong><p>Try another search, or add your first customer.</p><button class="button-primary" id="customer-empty-add">＋ Add customer</button></div>
+        </section>
+
+        <section class="page" id="page-templates">
+          <div class="page-title-row"><div><p class="eyebrow">A LITTLE HELP WITH THE WORDS</p><h1>Message templates</h1><p class="page-intro">Make these messages sound like you. Add <code>{{name}}</code> wherever you'd like a customer's name.</p></div><button class="button-primary save-templates" id="save-templates">Save changes</button></div>
+          <div class="template-note"><span class="note-icon">✳</span><span>Templates stay on this device. You can personalize them before sending in WhatsApp.</span></div>
+          <div class="template-grid" id="template-grid"></div>
+          <div class="template-actions"><button class="text-button" id="reset-templates">Restore original messages</button><span id="template-saved" class="saved-indicator" aria-live="polite"></span></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation"><button class="mobile-nav-link active" data-page="dashboard"><span>◫</span>Overview</button><button class="mobile-nav-link" data-page="customers"><span>♧</span>Customers</button><button class="mobile-nav-link" data-page="templates"><span>▤</span>Templates</button></nav>
+
+  <div class="modal-backdrop hidden" id="customer-modal" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header"><div><p class="eyebrow">CUSTOMER DETAILS</p><h2 id="modal-title">Add a customer</h2></div><button class="close-button" id="close-modal" aria-label="Close">×</button></div>
+      <form id="customer-form">
+        <input id="customer-id" type="hidden" />
+        <label class="field-label">Customer name (optional)<input id="form-name" name="name" type="text" placeholder="e.g. Priya Sharma" maxlength="70" /><small>Leave blank to use the phone number as their name.</small></label>
+        <label class="field-label">Phone number <span>*</span><div class="phone-input"><span>🇮🇳 +91</span><input id="form-phone" name="phone" type="tel" inputmode="tel" placeholder="98765 43210" required maxlength="18" /></div><small>Include country code if this is not an Indian number.</small></label>
+        <div class="form-row"><label class="field-label">Status<select id="form-status" name="status"><option value="New">New</option><option value="Contacted">Contacted</option><option value="Interested">Interested</option><option value="Confirmed">Confirmed</option><option value="Completed">Completed</option></select></label><label class="field-label">Next follow-up<input id="form-date" name="date" type="date" /></label></div>
+        <label class="field-label">Notes<textarea id="form-notes" name="notes" rows="3" placeholder="What would be helpful to remember?" maxlength="500"></textarea></label>
+        <div class="modal-footer"><button class="button-delete hidden" type="button" id="delete-customer">Delete customer</button><button class="button-quiet" type="button" id="cancel-modal">Cancel</button><button class="button-primary" type="submit" id="save-customer">Save customer</button></div>
+        <div class="delete-confirmation hidden" id="delete-confirmation" role="alert" aria-labelledby="delete-confirm-title" aria-describedby="delete-confirm-copy"><div><strong id="delete-confirm-title">Delete this customer?</strong><p id="delete-confirm-copy">Their saved details and follow-up will be removed from this device.</p></div><div class="delete-confirm-actions"><button class="delete-keep-button" type="button" id="cancel-delete">Keep customer</button><button class="delete-confirm-button" type="button" id="confirm-delete">Delete permanently</button></div></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="profile-modal" role="presentation">
+    <section class="modal profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title">
+      <div class="modal-header"><div><p class="eyebrow">YOUR WORKSPACE</p><h2 id="profile-modal-title">Business profile</h2></div><button class="close-button" id="close-profile-modal" aria-label="Close">×</button></div>
+      <p class="profile-modal-intro">These details identify you and your business in Pinglo.</p>
+      <form id="profile-form">
+        <label class="field-label">Your name <span>*</span><input id="profile-form-owner" type="text" required maxlength="70" placeholder="e.g. Asha Sharma" /></label>
+        <label class="field-label">Business name <span>*</span><input id="profile-form-business" type="text" required maxlength="80" placeholder="e.g. Asha's Boutique" /></label>
+        <div class="modal-footer"><button class="button-quiet" type="button" id="cancel-profile-modal">Cancel</button><button class="button-primary" type="submit">Save profile</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="message-modal" role="presentation">
+    <section class="modal message-modal" role="dialog" aria-modal="true" aria-labelledby="message-modal-title">
+      <div class="modal-header"><div><p class="eyebrow">Send message</p><h2 id="message-modal-title">Send message</h2></div><button class="close-button" id="close-message-modal" type="button" aria-label="Close">×</button></div>
+      <p class="profile-modal-intro" id="message-modal-intro">WhatsApp opens with this message. Review it, then tap Send.</p>
+      <form id="message-form">
+        <label class="field-label" for="message-recipient">Customer<select id="message-recipient" required><option value="">Choose a customer</option></select></label>
+        <label class="field-label" for="message-body">Message<textarea id="message-body" rows="6" maxlength="1000" required disabled></textarea><small id="message-error" class="message-error hidden">Please check this customer’s phone number.</small></label>
+        <div class="modal-footer"><button class="button-quiet" type="button" id="cancel-message">Cancel</button><a class="button-primary message-send-link" id="open-whatsapp-message" target="_blank" rel="noopener noreferrer" aria-disabled="true">Send on WhatsApp</a></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="supabase-config.js?v=20261025-1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+  <script src="locales.js?v=20261019-1"></script>
+  <script src="app.js?v=20261025-1"></script>
+</body>
+</html>
