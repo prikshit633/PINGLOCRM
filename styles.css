@@ -12,3 +12,15 @@ button, button * {
   -webkit-user-select: none;
   user-select: none;
 }
+
+.feedback-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:16px;align-items:start}
+.feedback-card,.feedback-info-card{padding:21px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.feedback-card .field-label textarea{min-height:160px;resize:vertical}
+.feedback-help{margin:-3px 0 16px;color:#92978e;font-size:10px;line-height:1.55}
+.feedback-submit-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.feedback-status{min-height:16px;color:#54805c;font-size:10px;line-height:1.5}
+.feedback-info-card h2{margin:10px 0 9px;font-size:16px}
+.feedback-info-card p{margin:0 0 11px;color:#858a80;font-size:11px;line-height:1.65}
+.feedback-info-card p strong{color:#4e584f}
+.feedback-info-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#edf4ec;color:#477354;font-size:17px}
+@media(max-width:820px){.feedback-layout{grid-template-columns:1fr}}
