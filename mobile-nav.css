@@ -30,3 +30,7 @@
   html[data-color-scheme="dark"] .mobile-nav-link.active{background:linear-gradient(145deg,#3d7c5a,#4a8f68);color:#fff}
 }
 @keyframes floatNavIn{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+
+@media(max-width:620px){
+  .modal-backdrop{z-index:40}
+}
