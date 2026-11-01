@@ -148,3 +148,9 @@ html[dir="rtl"] .profile-menu{right:auto;left:-2px}
 html[dir="rtl"] .profile-menu-action{text-align:right}
 html[data-color-scheme="dark"][dir="rtl"] .sidebar{border-left-color:var(--line)}
 @media(max-width:620px){html[dir="rtl"] .main-area{margin:0}html[dir="rtl"] .profile-menu{right:12px;left:12px}}
+
+html[data-color-scheme="dark"] .feedback-card,html[data-color-scheme="dark"] .feedback-info-card{border-color:#354237;background:#202a22}
+html[data-color-scheme="dark"] .feedback-help,html[data-color-scheme="dark"] .feedback-info-card p{color:#a6b1a6}
+html[data-color-scheme="dark"] .feedback-info-card p strong{color:#e2e9e1}
+html[data-color-scheme="dark"] .feedback-info-icon{background:#293c2e;color:#b5d8b5}
+html[data-color-scheme="dark"] .feedback-status{color:#b5d8b5}
