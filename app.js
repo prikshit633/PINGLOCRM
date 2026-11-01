@@ -621,11 +621,28 @@
       return `<article class="template-card" data-template-index="${index}"><div class="template-card-head"><span class="template-title"><span class="template-icon">${escapeHTML(template.icon)}</span>${escapeHTML(name)}</span><button class="button-primary template-send" type="button" data-send-template="${index}">${escapeHTML(t('Send message'))}</button></div><textarea data-template-text="${index}" aria-label="${escapeHTML(t('{name} message', { name }))}" maxlength="600">${escapeHTML(template.text)}</textarea><div class="template-hint"><span>${escapeHTML(t('Use {{name}} to personalize'))}</span><span class="char-count">${template.text.length}/600</span></div></article>`;
     }).join('');
   }
+  function submitFeedback(event) {
+    event.preventDefault();
+    const message = $('#feedback-message').value.trim();
+    const category = $('#feedback-category').value;
+    const categoryNames = { suggestion: 'Suggestion', issue: 'Report a problem', other: 'Other feedback' };
+    if (message.length < 10 || message.length > 1500 || !categoryNames[category]) return;
+    const subject = `Pinglo feedback: ${categoryNames[category]}`;
+    const body = [
+      `Feedback type: ${categoryNames[category]}`,
+      `Business: ${profile.businessName || 'Not provided'}`,
+      `Account email: ${currentUser?.email || 'Not provided'}`,
+      '',
+      message
+    ].join('\\n');
+    $('#feedback-status').textContent = t('Your email app should open. Review the draft and press Send.');
+    window.location.href = `mailto:prikshitcanva@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
   function renderAll() { renderStats(); renderFollowups(); renderCustomers(); renderProfile(); }
   function navigate(page) {
     $$('.page').forEach(el => el.classList.toggle('active-page', el.id === `page-${page}`));
     $$('.nav-link, .mobile-nav-link').forEach(el => el.classList.toggle('active', el.dataset.page === page));
-    $('#crumb-current').textContent = t(({ dashboard: 'Overview', customers: 'Customers', templates: 'Message templates' })[page]);
+    $('#crumb-current').textContent = t(({ dashboard: 'Overview', customers: 'Customers', templates: 'Message templates', feedback: 'Feedback & suggestions' })[page]);
     if (page === 'customers') renderCustomers();
     if (page === 'templates') renderTemplates();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -805,6 +822,7 @@
   $('#customer-search').addEventListener('input', renderCustomers);
   $('#status-filter').addEventListener('change', renderCustomers);
   $('#see-all-followups').addEventListener('click', () => navigate('customers'));
+  $('#feedback-form')?.addEventListener('submit', submitFeedback);
   $('#help-button').addEventListener('click', () => showToast(t(cloudReady ? 'Your customer list syncs to your private account.' : 'Your customer list is saved on this device.')));
   $$('.nav-link, .mobile-nav-link').forEach(button => button.addEventListener('click', () => navigate(button.dataset.page)));
   $$('[data-followup-filter]').forEach(button => button.addEventListener('click', () => setDashboardFilter(button.dataset.followupFilter)));
