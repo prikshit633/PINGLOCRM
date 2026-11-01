@@ -19,13 +19,10 @@
 .auth-card h2{margin:0;color:#28342b;font:800 28px/1.2 Manrope,sans-serif;letter-spacing:-.8px}
 .auth-description{margin:8px 0 24px;color:#899287;font-size:12px;line-height:1.6}
 .auth-social{display:grid;gap:10px}
-.auth-google,.auth-apple{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:43px;border-radius:8px;font-size:12px;font-weight:700;transition:background .15s,border-color .15s}
+.auth-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:43px;border-radius:8px;font-size:12px;font-weight:700;transition:background .15s,border-color .15s}
 .auth-google{border:1px solid #e3e8e1;background:#fff;color:#3f4941}
 .auth-google:hover{border-color:#cbd5ca;background:#fafbf9}
 .google-g{display:grid;place-items:center;width:21px;height:21px;border:1px solid #ecefea;border-radius:50%;color:#4285f4;font:700 13px Arial,sans-serif}
-.auth-apple{border:1px solid #111;background:#111;color:#fff}
-.auth-apple:hover{background:#000}
-.apple-logo{width:16px;height:16px}
 .auth-divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:#a0a69d;font-size:10px}
 .auth-divider::before,.auth-divider::after{height:1px;flex:1;background:#edf0ea;content:""}
 .auth-field{display:block;margin:0 0 14px;color:#4e584f;font-size:10px;font-weight:700}
@@ -54,8 +51,6 @@ html[data-color-scheme="dark"] .auth-description,html[data-color-scheme="dark"] 
 html[data-color-scheme="dark"] .auth-google{border-color:#3a473d;background:#202a22;color:#e3e9e2}
 html[data-color-scheme="dark"] .auth-google:hover{background:#29352b}
 html[data-color-scheme="dark"] .google-g{border-color:#465247;background:#202a22}
-html[data-color-scheme="dark"] .auth-apple{border-color:#f4f7f2;background:#f4f7f2;color:#111}
-html[data-color-scheme="dark"] .auth-apple:hover{background:#fff}
 html[data-color-scheme="dark"] .auth-divider::before,html[data-color-scheme="dark"] .auth-divider::after{background:#39453a}
 html[data-color-scheme="dark"] .auth-field{color:#c0cbc0}
 html[data-color-scheme="dark"] .auth-field input{border-color:#3c493e;background:#19221c;color:#e5ebe4}
