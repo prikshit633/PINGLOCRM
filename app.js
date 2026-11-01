@@ -418,10 +418,6 @@
       try { await signInWithProvider('google', 'Opening Google sign-in…'); }
       catch (error) { $('#auth-status').textContent = supabaseAuthError(error); }
     });
-    $('#auth-apple').addEventListener('click', async () => {
-      try { await signInWithProvider('apple', 'Opening Apple sign-in…'); }
-      catch (error) { $('#auth-status').textContent = supabaseAuthError(error); }
-    });
     $('#auth-forgot').addEventListener('click', async () => {
       if (!supabase) { authNotConnected(); return; }
       const email = $('#auth-email').value.trim();
