@@ -634,7 +634,7 @@
       `Account email: ${currentUser?.email || 'Not provided'}`,
       '',
       message
-    ].join('\\n');
+    ].join('\n');
     $('#feedback-status').textContent = t('Your email app should open. Review the draft and press Send.');
     window.location.href = `mailto:prikshitcanva@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
