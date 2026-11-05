@@ -233,6 +233,15 @@
   }
   function activeContactCount() { return customers.filter(customer => customer.status !== 'Completed').length; }
   function showPlansComingSoon() { showToast(t('Pro upgrades are coming soon. Razorpay will be added later.')); }
+  function transitionBillingText(element, value) {
+    if (!element || element.textContent === value) return;
+    element.textContent = value;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || typeof element.animate !== 'function') return;
+    element.animate(
+      [{ opacity: 0, transform: 'translateY(5px)', filter: 'blur(2px)' }, { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' }],
+      { duration: 240, easing: 'cubic-bezier(.2,.7,.25,1)' }
+    );
+  }
   let authMode = 'signin';
   function updateAuthMode() {
     const signup = authMode === 'signup';
@@ -501,9 +510,10 @@
     $('#btn-billing-monthly')?.setAttribute('aria-pressed', String(monthly));
     $('#btn-billing-annual')?.classList.toggle('active', !monthly);
     $('#btn-billing-annual')?.setAttribute('aria-pressed', String(!monthly));
-    if ($('#pro-price-value')) $('#pro-price-value').textContent = monthly ? '299' : '2,499';
-    $('#pro-price-period').textContent = monthly ? '/ month' : '/ year';
-    $('#pro-price-note').textContent = monthly ? 'Prepaid · 30 days of Pro access' : 'One-time prepaid pack · Save ₹1,089 (about 30%)';
+    $('#plan-billing-toggle')?.setAttribute('data-cycle', monthly ? 'monthly' : 'annual');
+    transitionBillingText($('#pro-price-value'), monthly ? '299' : '2,499');
+    transitionBillingText($('#pro-price-period'), monthly ? '/ month' : '/ year');
+    transitionBillingText($('#pro-price-note'), monthly ? 'Prepaid · 30 days of Pro access' : 'One-time prepaid pack · Save ₹1,089 (about 30%)');
     $('#pro-price-note')?.classList.add('is-visible');
     const freeBtn = $('#btn-current-free');
     if (freeBtn) {
