@@ -31,22 +31,27 @@
   width:48px;
   height:48px;
   border-radius:12px;
-  background:#4ade80;
+  background:#2865f5;
   transition:width .5s ease;
 }
 .add-customer-leading svg{display:block;flex:none}
+.add-customer-leading svg path{stroke:#fff}
 .add-customer-label{
   position:relative;
-  z-index:11;
+  z-index:1;
   width:100%;
   transform:translateX(8px);
   color:#111;
+  opacity:1;
   text-align:center;
   white-space:nowrap;
   pointer-events:none;
+  transition:opacity .22s ease,transform .22s ease;
 }
 .add-customer-button:hover .add-customer-leading,
 .add-customer-button:focus-visible .add-customer-leading{width:calc(100% - 8px)}
+.add-customer-button:hover .add-customer-label,
+.add-customer-button:focus-visible .add-customer-label{opacity:0;transform:translateX(16px)}
 .add-customer-button:active{transform:translateY(1px)}
 .add-customer-button:focus-visible{outline:3px solid #75a5ff;outline-offset:3px}
 .add-customer-button.mobile-add{display:none}
