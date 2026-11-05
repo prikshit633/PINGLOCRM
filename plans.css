@@ -1,0 +1,100 @@
+.plans-container{max-width:920px;margin:0 auto}
+.plan-current-banner{display:flex;align-items:center;gap:12px;margin:0 0 13px;padding:13px 16px;border:1px solid #dce8ff;border-radius:13px;background:linear-gradient(110deg,#f3f7ff,#fff);box-shadow:0 5px 18px rgba(26,75,165,.06)}
+.plan-current-icon{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:12px;background:#e4edff;color:#2865f5;font-size:18px}
+.plan-current-banner>div{display:grid;gap:2px;min-width:0;flex:1}
+.plan-current-label{color:#7583a3;font-size:9px;font-weight:800;letter-spacing:1.1px}
+.plan-current-banner strong{color:#182c54;font-family:Manrope,sans-serif;font-size:14px}
+.plan-current-banner small{color:#7c879c;font-size:10px;line-height:1.4}
+.plan-current-tag{padding:5px 9px;border-radius:30px;background:#e6efff;color:#2859c9;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.plan-contact-meter{margin-bottom:20px;padding:12px 15px;border:1px solid var(--line);border-radius:11px;background:var(--white)}
+.plan-meter-heading{display:flex;align-items:center;justify-content:space-between;color:#343c49;font-size:11px}
+.plan-meter-heading strong{font-weight:700}
+.plan-meter-heading span{color:#2865f5;font-size:10px;font-weight:800}
+.plan-usage-track{height:7px;margin-top:9px;overflow:hidden;border-radius:99px;background:#edf0f5}
+.plan-usage-track span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#2865f5,#60a4ff);transition:width .25s ease}
+.plan-contact-meter p{margin:7px 0 0;color:#8b929e;font-size:9px;line-height:1.5}
+.plan-billing-wrap{display:flex;justify-content:center;margin:18px 0 17px}
+.plan-billing-toggle{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid #e3e8f0;border-radius:999px;background:#f6f8fb}
+.plan-billing-btn{display:flex;align-items:center;gap:7px;padding:8px 13px;border:0;border-radius:999px;background:transparent;color:#788397;font-size:10px;font-weight:700;white-space:nowrap}
+.plan-billing-btn.active{background:#fff;color:#2357c9;box-shadow:0 1px 5px rgba(27,45,82,.13)}
+.plan-billing-btn:focus-visible{outline:2px solid #6a9dff;outline-offset:2px}
+.plan-save-pill{padding:3px 6px;border-radius:99px;background:#e5efff;color:#2865f5;font-size:8px;font-weight:800;letter-spacing:.1px}
+.plan-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:15px;margin-bottom:19px}
+.plan-card{position:relative;display:flex;flex-direction:column;min-width:0;padding:20px 19px 17px;border:1px solid #e5e9ef;border-radius:15px;background:#fff;box-shadow:0 8px 24px rgba(24,42,76,.045);transition:border-color .18s,box-shadow .18s}
+.plan-card.is-current-plan{border-color:#8db2ff;box-shadow:0 0 0 2px rgba(40,101,245,.09),0 10px 28px rgba(24,65,145,.08)}
+.plan-card-pro{overflow:hidden;border-color:#193d85;background:linear-gradient(145deg,#071735 0%,#0b2150 58%,#112d68 100%);box-shadow:0 13px 35px rgba(20,55,140,.2)}
+.plan-card-pro::before{position:absolute;top:-90px;right:-55px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(49,111,255,.28),transparent 70%);content:"";pointer-events:none}
+.plan-card-pro.is-current-plan{border-color:#73a7ff;box-shadow:0 0 0 2px rgba(90,151,255,.28),0 13px 35px rgba(20,55,140,.25)}
+.plan-card-header{position:relative;z-index:1}
+.plan-card-badge{display:inline-flex;align-items:center;min-height:21px;padding:4px 8px;border-radius:7px;background:#eef3fa;color:#77849a;font-size:8px;font-weight:800;letter-spacing:1px}
+.plan-card-pro .plan-card-badge{background:rgba(65,125,255,.19);color:#9ec2ff}
+.plan-card-title{margin:11px 0 4px;color:#18243b;font-family:Manrope,sans-serif;font-size:20px;font-weight:800;letter-spacing:-.6px}
+.plan-card-pro .plan-card-title{color:#fff}
+.plan-card-desc{min-height:31px;margin:0;color:#8b94a4;font-size:10px;line-height:1.55}
+.plan-card-pro .plan-card-desc{color:#a8badb}
+.plan-card-price-wrap{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 6px;margin-top:16px}
+.plan-card-price{color:#18243b;font-family:Manrope,sans-serif;font-size:32px;font-weight:800;letter-spacing:-1.3px;line-height:1.1}
+.plan-price-currency{margin-right:2px;font-family:'DM Sans',sans-serif;font-size:19px;font-weight:700;letter-spacing:0}
+.plan-price-period{color:#8992a1;font-size:10px;font-weight:600}
+.plan-card-pro .plan-card-price{color:#fff}
+.plan-card-pro .plan-price-period{color:#a8badb}
+.plan-price-annual-note{display:none;flex-basis:100%;margin-top:6px;color:#8f9fba;font-size:9px;font-weight:600}
+.plan-price-annual-note.is-visible{display:block}
+.plan-card-pro .plan-price-annual-note{color:#91b5f5}
+.plan-card-divider{height:1px;margin:15px 0 14px;background:#edf0f5}
+.plan-card-pro .plan-card-divider{background:rgba(139,175,235,.19)}
+.plan-features{display:grid;gap:10px;margin:0 0 16px;padding:0;list-style:none}
+.plan-feature{display:flex;align-items:flex-start;gap:8px;color:#697587;font-size:10px;line-height:1.5}
+.plan-card-pro .plan-feature{color:#c0d1ec}
+.plan-feature-check{display:grid;place-items:center;width:17px;height:17px;flex:none;margin-top:-1px;border-radius:50%;background:#e8f0ff;color:#2865f5;font-size:9px;font-weight:800}
+.plan-card-pro .plan-feature-check{background:rgba(40,101,245,.25);color:#91b9ff}
+.plan-card-cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:40px;margin-top:auto;padding:10px 13px;border:0;border-radius:9px;font-size:10px;font-weight:800;letter-spacing:.1px}
+.plan-cta-current{border:1px solid #e4e9f0;background:#f7f8fa;color:#718096}
+.plan-cta-pro{background:linear-gradient(110deg,#2865f5,#55a0ff);color:#fff;box-shadow:0 6px 17px rgba(40,101,245,.25)}
+.plan-cta-pro:disabled{cursor:not-allowed;opacity:.73;box-shadow:none}
+.plan-checkout-note{margin:9px 0 0;color:#91a4c6;text-align:center;font-size:8px;line-height:1.5}
+.plan-popular-badge{position:absolute;top:14px;right:14px;z-index:1;color:#9ec2ff;font-size:8px;font-weight:800;letter-spacing:.55px}
+.plan-faq{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--white)}
+.plan-faq h3{margin:0 0 12px;color:#313b4d;font-family:Manrope,sans-serif;font-size:13px;font-weight:800}
+.plan-faq-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 17px}
+.plan-faq-item strong{display:block;margin-bottom:3px;color:#4c586a;font-size:9px}
+.plan-faq-item p{margin:0;color:#8992a0;font-size:9px;line-height:1.55}
+.template-card-locked{border-color:#e3e8f1;background:linear-gradient(145deg,#fff,#f8faff)}
+.template-card-locked textarea:disabled{background:#f5f7fb;color:#9aa3b2;cursor:not-allowed}
+.template-card-locked .template-unlock{flex:none;padding:7px 9px;border:1px solid #dbe5f5;border-radius:7px;background:#eff4fc;color:#3867be;font-size:9px;font-weight:700}
+.template-card-locked .template-unlock:hover{border-color:#b7cdf2;background:#e4edfb}
+[data-color-scheme="dark"] .plan-current-banner{border-color:#263c67;background:linear-gradient(110deg,#17233a,#19212e)}
+[data-color-scheme="dark"] .plan-current-banner strong,[data-color-scheme="dark"] .plan-meter-heading{color:#edf3ff}
+[data-color-scheme="dark"] .plan-current-label,[data-color-scheme="dark"] .plan-current-banner small,[data-color-scheme="dark"] .plan-contact-meter p{color:#9caecb}
+[data-color-scheme="dark"] .plan-current-tag{background:#203861;color:#a9c8ff}
+[data-color-scheme="dark"] .plan-contact-meter,[data-color-scheme="dark"] .plan-faq{border-color:var(--line);background:var(--white)}
+[data-color-scheme="dark"] .plan-meter-heading span{color:#8bb7ff}
+[data-color-scheme="dark"] .plan-usage-track{background:#293449}
+[data-color-scheme="dark"] .plan-billing-toggle{border-color:#39465b;background:#202b3d}
+[data-color-scheme="dark"] .plan-billing-btn.active{background:#34435b;color:#a9c8ff}
+[data-color-scheme="dark"] .plan-save-pill{background:#263e67;color:#a9c8ff}
+[data-color-scheme="dark"] .plan-card:not(.plan-card-pro){border-color:var(--line);background:var(--white)}
+[data-color-scheme="dark"] .plan-card-title,[data-color-scheme="dark"] .plan-card-price,[data-color-scheme="dark"] .plan-faq h3{color:#edf3ff}
+[data-color-scheme="dark"] .plan-card-desc,[data-color-scheme="dark"] .plan-price-period,[data-color-scheme="dark"] .plan-feature,[data-color-scheme="dark"] .plan-faq-item p{color:#a6b1c2}
+[data-color-scheme="dark"] .plan-card-badge{background:#27354a;color:#aebbd0}
+[data-color-scheme="dark"] .plan-card-divider{background:#334055}
+[data-color-scheme="dark"] .plan-cta-current{border-color:#39465b;background:#222d3e;color:#aab5c7}
+[data-color-scheme="dark"] .template-card-locked{border-color:#354156;background:#202a3b}
+[data-color-scheme="dark"] .template-card-locked textarea:disabled{border-color:#38465e;background:#1a2434;color:#8794a9}
+@media(max-width:760px){.plans-container{max-width:560px}.plan-cards{grid-template-columns:1fr;gap:12px}.plan-card{padding:18px}.plan-card-desc{min-height:0}.plan-card-pro{order:-1}.plan-faq-grid{gap:12px}}
+@media(max-width:520px){.plan-current-banner{padding:11px 12px;gap:9px}.plan-current-icon{width:34px;height:34px}.plan-current-banner strong{font-size:12px}.plan-current-banner small{font-size:9px}.plan-current-tag{padding:4px 7px;font-size:8px}.plan-contact-meter{padding:11px 12px}.plan-billing-btn{padding:8px 10px;font-size:9px}.plan-save-pill{font-size:7px}.plan-card{padding:16px 15px}.plan-card-pro{order:0}.plan-card-title{font-size:19px}.plan-card-price{font-size:29px}.plan-popular-badge{top:12px;right:12px;font-size:7px}.plan-faq{padding:13px}.plan-faq-grid{grid-template-columns:1fr}}
+.profile-plans .plan-badge{border-color:#d7e4ff;background:linear-gradient(135deg,#f1f6ff,#eaf1ff)}
+.profile-plans .plan-badge-icon{background:#dce8ff;color:#285ed2}
+.profile-plans .plan-badge-name{color:#244789}
+.profile-plans .plan-badge-desc,.profile-plans .plan-valid-until{color:#7589ae}
+.profile-plans .plan-badge-pill{background:#e1ebff;color:#2d5fc0}
+.profile-plans .plan-upgrade-button{background:linear-gradient(120deg,#2865f5,#4d91ff);box-shadow:0 2px 7px rgba(40,101,245,.2)}
+.profile-plans .plan-upgrade-button:hover{background:linear-gradient(120deg,#1f55db,#3d80ee);box-shadow:0 4px 11px rgba(40,101,245,.28)}
+.profile-plans .plan-badge-pro{border-color:#bed2ff;background:linear-gradient(135deg,#edf4ff,#dfeaff)}
+.profile-plans .plan-badge-pro .plan-badge-pill{background:#2865f5;color:#fff}
+[data-color-scheme="dark"] .profile-plans .plan-badge{border-color:#344967;background:linear-gradient(135deg,#1e2b40,#202d43)}
+[data-color-scheme="dark"] .profile-plans .plan-badge-name{color:#c5d8ff}
+[data-color-scheme="dark"] .profile-plans .plan-badge-desc,[data-color-scheme="dark"] .profile-plans .plan-valid-until{color:#91a8cf}
+[data-color-scheme="dark"] .profile-plans .plan-badge-pill{background:#2c3d57;color:#b9ceef}
+[data-color-scheme="dark"] .profile-plans .plan-badge-pro .plan-badge-pill{background:#2865f5;color:#fff}
+
