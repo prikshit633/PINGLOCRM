@@ -13,6 +13,7 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=20261101-4" />
+  <link rel="stylesheet" href="add-customer-button.css?v=20261105-2" />
   <link rel="stylesheet" href="profile.css?v=20261105-1" />
   <link rel="stylesheet" href="themes.css?v=20261101-4" />
   <link rel="stylesheet" href="messages.css?v=20261008-2" />
@@ -159,8 +160,8 @@
         <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong
             id="crumb-current">Overview</strong></div>
         <div class="topbar-actions"><span class="today-label" id="today-label"></span><button class="icon-button"
-            id="help-button" aria-label="About Pinglo" title="About">?</button><button class="add-button"
-            id="top-add"><span>＋</span> Add customer</button><button class="avatar avatar-owner mobile-profile-button"
+            id="help-button" aria-label="About Pinglo" title="About">?</button><button class="add-customer-button"
+            id="top-add" type="button" aria-label="Add customer"><span class="add-customer-leading" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="25" height="25"><path d="M512 192v640M192 512h640" fill="none" stroke="#000" stroke-width="88" stroke-linecap="round"/></svg></span><span class="add-customer-label">Add customer</span></button><button class="avatar avatar-owner mobile-profile-button"
             id="mobile-profile-button" aria-label="Open business profile" aria-haspopup="true" aria-expanded="false"
             title="Business profile">AS</button></div>
       </header>
@@ -172,7 +173,7 @@
               <p class="eyebrow">YOUR BUSINESS, AT A GLANCE</p>
               <h1 id="welcome-title">Welcome back, Asha <span class="wave">✳</span></h1>
               <p class="page-intro">A few thoughtful follow-ups can make someone's day.</p>
-            </div><button class="button-primary mobile-add" id="mobile-add"><span>＋</span> Add customer</button>
+            </div><button class="add-customer-button mobile-add" id="mobile-add" type="button" aria-label="Add customer"><span class="add-customer-leading" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="25" height="25"><path d="M512 192v640M192 512h640" fill="none" stroke="#000" stroke-width="88" stroke-linecap="round"/></svg></span><span class="add-customer-label">Add customer</span></button>
           </div>
           <div class="stats-grid">
             <button class="stat-card stat-today" data-filter="today"><span class="stat-top"><span
@@ -215,7 +216,7 @@
             <div class="empty-state hidden" id="dashboard-empty"><span class="empty-icon">☀</span><strong
                 id="dashboard-empty-title">All caught up</strong>
               <p id="dashboard-empty-copy">No follow-ups in this view. Enjoy the breathing room.</p><button
-                class="text-button" id="empty-add">Add a customer →</button>
+                class="add-customer-button" id="empty-add" type="button" aria-label="Add customer"><span class="add-customer-leading" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="25" height="25"><path d="M512 192v640M192 512h640" fill="none" stroke="#000" stroke-width="88" stroke-linecap="round"/></svg></span><span class="add-customer-label">Add customer</span></button>
             </div>
           </div>
           <div class="bottom-note"><span class="note-icon">✦</span><span><strong>A friendly reminder:</strong> A
@@ -228,7 +229,7 @@
               <p class="eyebrow">YOUR CUSTOMER BOOK</p>
               <h1>Customers <span class="title-count" id="customer-total">0</span></h1>
               <p class="page-intro">Keep every conversation and next step in one place.</p>
-            </div><button class="button-primary" id="customer-add"><span>＋</span> Add customer</button>
+            </div><button class="add-customer-button" id="customer-add" type="button" aria-label="Add customer"><span class="add-customer-leading" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="25" height="25"><path d="M512 192v640M192 512h640" fill="none" stroke="#000" stroke-width="88" stroke-linecap="round"/></svg></span><span class="add-customer-label">Add customer</span></button>
           </div>
           <div class="customer-controls"><label class="search-box customer-search"><span>⌕</span><input
                 id="customer-search" type="search" placeholder="Search name or phone"
@@ -245,8 +246,8 @@
           <div class="customer-list" id="customer-list"></div>
           <div class="empty-state hidden customer-empty" id="customer-empty"><span class="empty-icon">♡</span><strong>No
               customers found</strong>
-            <p>Try another search, or add your first customer.</p><button class="button-primary"
-              id="customer-empty-add">＋ Add customer</button>
+            <p>Try another search, or add your first customer.</p><button class="add-customer-button"
+              id="customer-empty-add" type="button" aria-label="Add customer"><span class="add-customer-leading" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="25" height="25"><path d="M512 192v640M192 512h640" fill="none" stroke="#000" stroke-width="88" stroke-linecap="round"/></svg></span><span class="add-customer-label">Add customer</span></button>
           </div>
         </section>
 
