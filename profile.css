@@ -29,3 +29,22 @@
 .profile-language{display:block;margin-top:12px}
 .profile-language select{width:100%;height:34px;padding:0 9px;border:1px solid #e8e9e2;border-radius:7px;background:#fff;color:#485448;font-size:11px}
 .profile-language select:focus-visible{outline:2px solid #8fb99a;outline-offset:1px}
+
+/* Plans section */
+.profile-plans{margin-top:0}
+.plan-badge{display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid #e6eddf;border-radius:9px;background:linear-gradient(135deg,#f4f9f4 0%,#edf5ee 100%)}
+.plan-badge-icon{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#d5ead6;color:#376445;font-size:14px;flex:none}
+.plan-badge-copy{flex:1;min-width:0}
+.plan-badge-name{display:block;color:#2d5239;font-size:12px;font-weight:700}
+.plan-badge-desc{display:block;margin-top:2px;color:#7a9980;font-size:10px}
+.plan-badge-pill{flex:none;padding:3px 7px;border-radius:20px;background:#d1e9d2;color:#2f6340;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.plan-upgrade-button{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;margin-top:7px;padding:8px 10px;border:0;border-radius:7px;background:linear-gradient(135deg,#2d664a 0%,#3a7d5e 100%);color:#fff;font-size:11px;font-weight:700;letter-spacing:.2px;box-shadow:0 2px 6px rgba(45,102,74,.2);transition:background .15s,transform .15s,box-shadow .15s}
+.plan-upgrade-button:hover{background:linear-gradient(135deg,#255a40 0%,#316e52 100%);transform:translateY(-1px);box-shadow:0 4px 10px rgba(45,102,74,.28)}
+.plan-upgrade-button:active{transform:translateY(0);box-shadow:0 2px 4px rgba(45,102,74,.15)}
+.plan-upgrade-button span{font-size:13px;line-height:1}
+.plan-upgrade-button:focus-visible{outline:3px solid #8fb99a;outline-offset:2px}
+.plan-valid-until{display:block;margin-top:2px;color:#7a9980;font-size:10px}
+.plan-badge-pro{border-color:#cfe3d3;background:linear-gradient(135deg,#eef7ef 0%,#e3f0e6 100%)}
+.plan-badge-pro .plan-badge-name{color:#24583a}
+.plan-badge-pro .plan-badge-pill{background:#2d664a;color:#fff}
+
