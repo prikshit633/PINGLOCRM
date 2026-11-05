@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="auth.css?v=20261101-1" />
   <link rel="stylesheet" href="mobile-nav.css?v=20261101-1" />
   <link rel="stylesheet" href="brand.css?v=20261018" />
-  <link rel="stylesheet" href="plans.css?v=20261105-3" />
+  <link rel="stylesheet" href="plans.css?v=20261105-4" />
 </head>
 
 <body class="auth-gated">
@@ -289,7 +289,8 @@
             </div>
 
             <div class="plan-billing-wrap">
-              <div class="plan-billing-toggle" role="group" aria-label="Choose Premium Pro prepaid period">
+              <div class="plan-billing-toggle" id="plan-billing-toggle" data-cycle="monthly" role="group" aria-label="Choose Premium Pro prepaid period">
+                <span class="plan-billing-indicator" aria-hidden="true"></span>
                 <button type="button" class="plan-billing-btn active" id="btn-billing-monthly" aria-pressed="true">Monthly</button>
                 <button type="button" class="plan-billing-btn" id="btn-billing-annual" aria-pressed="false">Yearly <span class="plan-save-pill">Save about 30%</span></button>
               </div>
@@ -493,7 +494,7 @@
   <script src="supabase-config.js?v=20261025-1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
   <script src="locales.js?v=20261019-1"></script>
-  <script src="app.js?v=20261105-3"></script>
+  <script src="app.js?v=20261105-4"></script>
 </body>
 
 </html>
