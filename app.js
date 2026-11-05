@@ -24,6 +24,10 @@
   let cloudWriteQueue = Promise.resolve();
   const localeData = window.DukaanLocales || { languages: [{ code: 'en', label: 'English', locale: 'en-IN' }], messages: { en: {} } };
   const defaultProfile = { ownerName: 'Asha', businessName: "Asha's Boutique" };
+  const FREE_CUSTOMER_LIMIT = 15;
+  const FREE_TEMPLATE_LIMIT = 2;
+  let billingCycle = 'monthly';
+  let workspacePlan = { tier: 'free', validUntil: null };
   const statuses = ['New', 'Contacted', 'Interested', 'Confirmed', 'Completed'];
   const templateDefaults = [
     { id: 'follow-up', name: 'Follow-up', icon: '↗', text: 'Hi {{name}}! 😊 Just checking in about your enquiry at Asha’s Boutique. Let me know if I can help with anything. — Asha' },
@@ -65,12 +69,12 @@
   try {
     const savedTheme = localStorage.getItem(THEME_KEY);
     if (['light', 'dark', 'system'].includes(savedTheme)) themeMode = savedTheme;
-  } catch {}
+  } catch { }
   let languageCode = 'en';
   try {
     const savedLanguage = localStorage.getItem(LANGUAGE_KEY);
     if (localeData.languages.some(language => language.code === savedLanguage)) languageCode = savedLanguage;
-  } catch {}
+  } catch { }
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -222,6 +226,13 @@
     return message ? `${base}?text=${encodeURIComponent(message)}` : base;
   }
   function showToast(message) { const toast = $('#toast'); toast.textContent = message; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 2300); }
+  function isProPlan() {
+    if (workspacePlan.tier !== 'pro') return false;
+    if (!workspacePlan.validUntil) return true;
+    return parseDate(workspacePlan.validUntil) >= today;
+  }
+  function activeContactCount() { return customers.filter(customer => customer.status !== 'Completed').length; }
+  function showPlansComingSoon() { showToast(t('Pro upgrades are coming soon. Razorpay will be added later.')); }
   let authMode = 'signin';
   function updateAuthMode() {
     const signup = authMode === 'signup';
@@ -272,6 +283,7 @@
     customers = demoCustomers();
     templates = templateDefaults.map(template => ({ ...template }));
     profile = { ...defaultProfile };
+    workspacePlan = { tier: 'free', validUntil: null };
     cloudCustomerIds = new Set();
     localStorage.setItem(CUSTOMER_KEY, JSON.stringify(customers));
     localStorage.setItem(TEMPLATE_KEY, JSON.stringify(templates));
@@ -306,6 +318,10 @@
     profile = {
       ownerName: account.owner_name || user.user_metadata?.display_name || (savedLocalProfile.ownerName !== defaultProfile.ownerName ? savedLocalProfile.ownerName : emailName) || 'Business owner',
       businessName: account.business_name || (savedLocalProfile.businessName !== defaultProfile.businessName ? savedLocalProfile.businessName : 'My Business')
+    };
+    workspacePlan = {
+      tier: account.plan_tier === 'pro' ? 'pro' : 'free',
+      validUntil: account.pro_valid_until || null
     };
     templates = remoteTemplates.length
       ? cloudTemplates(remoteTemplates.map(template => ({ id: template.id, text: template.message })))
@@ -350,7 +366,7 @@
       cloudCustomerIds = new Set();
       if (previousUser) resetLocalDataForDemo();
       let useDemo = false;
-      try { useDemo = sessionStorage.getItem(AUTH_DEMO_KEY) === '1'; } catch {}
+      try { useDemo = sessionStorage.getItem(AUTH_DEMO_KEY) === '1'; } catch { }
       if (useDemo) {
         authScreen.classList.add('hidden');
         document.body.classList.remove('auth-gated');
@@ -361,7 +377,7 @@
     currentUser = user;
     try {
       await loadCloudData(user);
-      try { sessionStorage.removeItem(AUTH_DEMO_KEY); } catch {}
+      try { sessionStorage.removeItem(AUTH_DEMO_KEY); } catch { }
       $('.auth-privacy').textContent = t('Your business data is synced to your private account.');
       authScreen.classList.add('hidden');
       document.body.classList.remove('auth-gated');
@@ -380,7 +396,7 @@
   }
   function initAuthGate() {
     let demoSession = false;
-    try { demoSession = sessionStorage.getItem(AUTH_DEMO_KEY) === '1'; } catch {}
+    try { demoSession = sessionStorage.getItem(AUTH_DEMO_KEY) === '1'; } catch { }
     if (demoSession) {
       authScreen.classList.add('hidden');
       document.body.classList.remove('auth-gated');
@@ -439,7 +455,7 @@
     });
     $('#demo-sign-out').addEventListener('click', async () => {
       closeProfileMenu();
-      try { sessionStorage.removeItem(AUTH_DEMO_KEY); } catch {}
+      try { sessionStorage.removeItem(AUTH_DEMO_KEY); } catch { }
       if (supabase && currentUser) {
         try {
           const { error } = await supabase.auth.signOut();
@@ -466,7 +482,7 @@
       console.error('Pinglo Supabase session could not load', error);
       showAuthScreen('Could not connect to Supabase. Check your connection and try again.');
     });
-  }  function renderProfile() {
+  } function renderProfile() {
     const owner = String(profile.ownerName || defaultProfile.ownerName).trim() || defaultProfile.ownerName;
     const business = String(profile.businessName || defaultProfile.businessName).trim() || defaultProfile.businessName;
     $('#profile-business-name').textContent = business;
@@ -476,6 +492,58 @@
     $('#profile-menu-business').textContent = business;
     $('#profile-menu-owner').textContent = t('{name} · Business owner', { name: owner });
     $('#welcome-title').innerHTML = `${escapeHTML(t('Welcome back, {name}', { name: owner }))} <span class="wave">✳</span>`;
+    renderPlanPage();
+  }
+  function renderPlanPage() {
+    const pro = isProPlan();
+    const monthly = billingCycle === 'monthly';
+    $('#btn-billing-monthly')?.classList.toggle('active', monthly);
+    $('#btn-billing-monthly')?.setAttribute('aria-pressed', String(monthly));
+    $('#btn-billing-annual')?.classList.toggle('active', !monthly);
+    $('#btn-billing-annual')?.setAttribute('aria-pressed', String(!monthly));
+    if ($('#pro-price-value')) $('#pro-price-value').textContent = monthly ? '299' : '2,499';
+    $('#pro-price-period').textContent = monthly ? '/ month' : '/ year';
+    $('#pro-price-note').textContent = monthly ? 'Prepaid · 30 days of Pro access' : 'One-time prepaid pack · Save ₹1,089 (about 30%)';
+    $('#pro-price-note')?.classList.add('is-visible');
+    const freeBtn = $('#btn-current-free');
+    if (freeBtn) {
+      freeBtn.textContent = t(pro ? 'Free Starter' : 'Your current plan');
+      freeBtn.disabled = true;
+    }
+    const proBtn = $('#btn-upgrade-pro');
+    if (proBtn) {
+      proBtn.disabled = true;
+      proBtn.textContent = t(pro ? 'Your current plan' : 'Pro upgrades coming soon');
+    }
+    if ($('#plan-badge-name')) {
+      $('#plan-badge-name').textContent = t(pro ? 'Premium Pro' : 'Free Starter');
+      $('#plan-badge-desc').textContent = pro ? t('Unlimited active contacts') : t('{count} of {limit} active contacts', { count: activeContactCount(), limit: FREE_CUSTOMER_LIMIT });
+      $('#plan-badge-pill').textContent = t(pro ? 'Active' : 'Free');
+      $('.plan-badge')?.classList.toggle('plan-badge-pro', pro);
+      const until = $('#plan-valid-until');
+      if (until) {
+        const showUntil = Boolean(pro && workspacePlan.validUntil);
+        until.classList.toggle('hidden', !showUntil);
+        until.textContent = showUntil ? t('Valid until {date}', { date: prettyDate(workspacePlan.validUntil) }) : '';
+      }
+    }
+    const upgrade = $('#plan-upgrade-button');
+    if (upgrade) upgrade.textContent = t(pro ? 'View plan details' : 'Upgrade to Pro');
+    const currentName = $('#plan-current-name');
+    if (currentName) currentName.textContent = t(pro ? 'Premium Pro' : 'Free Starter');
+    const currentCopy = $('#plan-current-copy');
+    if (currentCopy) currentCopy.textContent = pro
+      ? (workspacePlan.validUntil ? t('Prepaid access · valid until {date}', { date: prettyDate(workspacePlan.validUntil) }) : t('Your Pro plan is active'))
+      : t('Free forever · {count} of {limit} active contacts used', { count: activeContactCount(), limit: FREE_CUSTOMER_LIMIT });
+    const usage = $('#plan-usage-count');
+    if (usage) usage.textContent = `${activeContactCount()} / ${FREE_CUSTOMER_LIMIT}`;
+    const usageBar = $('#plan-usage-bar');
+    if (usageBar) usageBar.style.width = `${Math.min(100, Math.round(activeContactCount() / FREE_CUSTOMER_LIMIT * 100))}%`;
+    $('#free-contact-meter')?.classList.toggle('hidden', pro);
+    const freeCurrent = $('#card-plan-free');
+    const proCurrent = $('#card-plan-pro');
+    freeCurrent?.classList.toggle('is-current-plan', !pro);
+    proCurrent?.classList.toggle('is-current-plan', pro);
   }
   const profileHome = $('.profile');
   function closeProfileMenu() {
@@ -616,17 +684,23 @@
   }
   function renderTemplates() {
     const translatedNames = { 'follow-up': 'Follow-up', 'order-ready': 'Order Ready', 'payment-reminder': 'Payment Reminder', 'appointment-reminder': 'Appointment Reminder', 'thank-you': 'Thank You' };
+    const accessNote = $('#template-access-note');
+    if (accessNote) accessNote.textContent = t(isProPlan()
+      ? 'Premium Pro unlocks every template. Custom templates are part of the Pro plan.'
+      : 'Free Starter includes two standard templates. Upgrade to Premium Pro to unlock the rest.');
     $('#template-grid').innerHTML = templates.map((template, index) => {
       const name = t(translatedNames[template.id] || template.name);
-      return `<article class="template-card" data-template-index="${index}"><div class="template-card-head"><span class="template-title"><span class="template-icon">${escapeHTML(template.icon)}</span>${escapeHTML(name)}</span><button class="button-primary template-send" type="button" data-send-template="${index}">${escapeHTML(t('Send message'))}</button></div><textarea data-template-text="${index}" aria-label="${escapeHTML(t('{name} message', { name }))}" maxlength="600">${escapeHTML(template.text)}</textarea><div class="template-hint"><span>${escapeHTML(t('Use {{name}} to personalize'))}</span><span class="char-count">${template.text.length}/600</span></div></article>`;
+      const locked = !isProPlan() && index >= FREE_TEMPLATE_LIMIT;
+      return `<article class="template-card${locked ? ' template-card-locked' : ''}" data-template-index="${index}"><div class="template-card-head"><span class="template-title"><span class="template-icon">${escapeHTML(template.icon)}</span>${escapeHTML(name)}</span><button class="${locked ? 'button-quiet template-unlock' : 'button-primary template-send'}" type="button" data-send-template="${index}">${escapeHTML(t(locked ? 'Upgrade to Pro' : 'Send message'))}</button></div><textarea data-template-text="${index}" aria-label="${escapeHTML(t('{name} message', { name }))}" maxlength="600"${locked ? ' disabled' : ''}>${escapeHTML(template.text)}</textarea><div class="template-hint"><span>${escapeHTML(t(locked ? 'Upgrade to Pro to use and edit this template' : 'Use {{name}} to personalize'))}</span><span class="char-count">${template.text.length}/600</span></div></article>`;
     }).join('');
   }
   function submitFeedback(event) {
     event.preventDefault();
+    const status = $('#feedback-status');
     const message = $('#feedback-message').value.trim();
     const category = $('#feedback-category').value;
+    if (message.length < 10 || message.length > 1500 || !['suggestion', 'issue', 'other'].includes(category)) return;
     const categoryNames = { suggestion: 'Suggestion', issue: 'Report a problem', other: 'Other feedback' };
-    if (message.length < 10 || message.length > 1500 || !categoryNames[category]) return;
     const subject = `Pinglo feedback: ${categoryNames[category]}`;
     const body = [
       `Feedback type: ${categoryNames[category]}`,
@@ -635,14 +709,14 @@
       '',
       message
     ].join('\n');
-    $('#feedback-status').textContent = t('Your email app should open. Review the draft and press Send.');
+    status.textContent = t('Your email app should open. Review the draft and press Send.');
     window.location.href = `mailto:prikshitcanva@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
   function renderAll() { renderStats(); renderFollowups(); renderCustomers(); renderProfile(); }
   function navigate(page) {
     $$('.page').forEach(el => el.classList.toggle('active-page', el.id === `page-${page}`));
     $$('.nav-link, .mobile-nav-link').forEach(el => el.classList.toggle('active', el.dataset.page === page));
-    $('#crumb-current').textContent = t(({ dashboard: 'Overview', customers: 'Customers', templates: 'Message templates', feedback: 'Feedback & suggestions' })[page]);
+    $('#crumb-current').textContent = t(({ dashboard: 'Overview', customers: 'Customers', templates: 'Message templates', plans: 'Plans & Pricing', feedback: 'Feedback & suggestions' })[page] || 'Overview');
     if (page === 'customers') renderCustomers();
     if (page === 'templates') renderTemplates();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -695,6 +769,11 @@
     else link.removeAttribute('href');
   }
   function openMessageModal(templateIndex) {
+    if (!isProPlan() && Number(templateIndex) >= FREE_TEMPLATE_LIMIT) {
+      showToast(t('This template is part of Premium Pro.'));
+      navigate('plans');
+      return;
+    }
     if (!customers.length) { showToast(t('Add a customer first to send a message.')); return; }
     activeMessageTemplateIndex = Math.max(0, Math.min(templates.length - 1, Number(templateIndex) || 0));
     const recipient = $('#message-recipient');
@@ -729,6 +808,12 @@
     const name = $('#form-name').value.trim() || phone;
     const customer = { id: id || `customer-${Date.now()}`, name, phone, status: $('#form-status').value, nextFollowUp: $('#form-date').value, notes: $('#form-notes').value.trim(), createdAt: previous?.createdAt || localDateString(today) };
     if (customer.status === 'Completed') customer.nextFollowUp = '';
+    const addingActiveContact = customer.status !== 'Completed' && (!previous || previous.status === 'Completed');
+    if (addingActiveContact && !isProPlan() && activeContactCount() >= FREE_CUSTOMER_LIMIT) {
+      showToast(t('Free Starter includes 15 active contacts. Upgrade to add more.'));
+      navigate('plans');
+      return;
+    }
     if (previous) customers = customers.map(c => c.id === id ? customer : c); else customers.unshift(customer);
     saveCustomers(); closeModal(); renderAll(); showToast(t(previous ? 'Customer details updated' : 'Customer added to your list'));
   }
@@ -756,6 +841,12 @@
   }
   function setStatus(id, status) {
     const customer = customerById(id); if (!customer) return;
+    if (status !== 'Completed' && customer.status === 'Completed' && !isProPlan() && activeContactCount() >= FREE_CUSTOMER_LIMIT) {
+      showToast(t('Free Starter includes 15 active contacts. Upgrade to add more.'));
+      navigate('plans');
+      renderCustomers();
+      return;
+    }
     customer.status = status;
     if (status === 'Completed') customer.nextFollowUp = '';
     saveCustomers(); renderAll(); showToast(t('Customer status updated'));
@@ -859,8 +950,14 @@
     if (!window.confirm(t('Restore all five original message templates? Your edits will be replaced.'))) return;
     templates = templateDefaults.map(t => ({ ...t })); saveTemplates(); renderTemplates(); $('#template-saved').textContent = t('Original messages restored');
   });
+  $('#btn-billing-monthly')?.addEventListener('click', () => { billingCycle = 'monthly'; renderPlanPage(); });
+  $('#btn-billing-annual')?.addEventListener('click', () => { billingCycle = 'annual'; renderPlanPage(); });
+  $('#btn-upgrade-pro')?.addEventListener('click', showPlansComingSoon);
+  $('#plan-upgrade-button')?.addEventListener('click', () => { closeProfileMenu(); navigate('plans'); });
 
   applyLocale();
   applyThemeMode();
   renderAll();
 })();
+
+
