@@ -14,9 +14,11 @@
 .plan-usage-track span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#2865f5,#60a4ff);transition:width .25s ease}
 .plan-contact-meter p{margin:7px 0 0;color:#8b929e;font-size:9px;line-height:1.5}
 .plan-billing-wrap{display:flex;justify-content:center;margin:18px 0 17px}
-.plan-billing-toggle{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid #e3e8f0;border-radius:999px;background:#f6f8fb}
-.plan-billing-btn{display:flex;align-items:center;gap:7px;padding:8px 13px;border:0;border-radius:999px;background:transparent;color:#788397;font-size:10px;font-weight:700;white-space:nowrap}
-.plan-billing-btn.active{background:#fff;color:#2357c9;box-shadow:0 1px 5px rgba(27,45,82,.13)}
+.plan-billing-toggle{position:relative;isolation:isolate;display:flex;align-items:center;gap:0;width:min(100%,268px);padding:4px;border:1px solid #e3e8f0;border-radius:999px;background:#f6f8fb}
+.plan-billing-indicator{position:absolute;z-index:-1;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/2);border-radius:999px;background:#fff;box-shadow:0 1px 5px rgba(27,45,82,.13);transform:translateX(0);transition:transform .38s cubic-bezier(.22,.8,.2,1)}
+.plan-billing-toggle[data-cycle="annual"] .plan-billing-indicator{transform:translateX(100%)}
+.plan-billing-btn{position:relative;z-index:1;display:flex;flex:1;align-items:center;justify-content:center;gap:5px;min-width:0;padding:8px 5px;border:0;border-radius:999px;background:transparent;color:#788397;font-size:10px;font-weight:700;white-space:nowrap;transition:color .24s ease}
+.plan-billing-btn.active{background:transparent;color:#2357c9}
 .plan-billing-btn:focus-visible{outline:2px solid #6a9dff;outline-offset:2px}
 .plan-save-pill{padding:3px 6px;border-radius:99px;background:#e5efff;color:#2865f5;font-size:8px;font-weight:800;letter-spacing:.1px}
 .plan-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:15px;margin-bottom:19px}
@@ -34,6 +36,7 @@
 .plan-card-pro .plan-card-desc{color:#a8badb}
 .plan-card-price-wrap{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 6px;margin-top:16px}
 .plan-card-price{color:#18243b;font-family:Manrope,sans-serif;font-size:32px;font-weight:800;letter-spacing:-1.3px;line-height:1.1}
+.plan-card-price #pro-price-value,.plan-price-period#pro-price-period{display:inline-block}
 .plan-price-currency{margin-right:2px;font-family:'DM Sans',sans-serif;font-size:19px;font-weight:700;letter-spacing:0}
 .plan-price-period{color:#8992a1;font-size:10px;font-weight:600}
 .plan-card-pro .plan-card-price{color:#fff}
@@ -71,7 +74,8 @@
 [data-color-scheme="dark"] .plan-meter-heading span{color:#8bb7ff}
 [data-color-scheme="dark"] .plan-usage-track{background:#293449}
 [data-color-scheme="dark"] .plan-billing-toggle{border-color:#39465b;background:#202b3d}
-[data-color-scheme="dark"] .plan-billing-btn.active{background:#34435b;color:#a9c8ff}
+[data-color-scheme="dark"] .plan-billing-indicator{background:#34435b;box-shadow:0 1px 5px rgba(0,0,0,.25)}
+[data-color-scheme="dark"] .plan-billing-btn.active{background:transparent;color:#a9c8ff}
 [data-color-scheme="dark"] .plan-save-pill{background:#263e67;color:#a9c8ff}
 [data-color-scheme="dark"] .plan-card:not(.plan-card-pro){border-color:var(--line);background:var(--white)}
 [data-color-scheme="dark"] .plan-card-title,[data-color-scheme="dark"] .plan-card-price,[data-color-scheme="dark"] .plan-faq h3{color:#edf3ff}
