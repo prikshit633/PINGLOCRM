@@ -51,7 +51,8 @@ button { font: inherit; }
 .text-link:hover { gap: 12px; }
 .hero-notes { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 26px; color: #7e897e; font-size: 10px; }
 .hero-notes span { display: inline-flex; align-items: center; gap: 7px; }
-.note-check { display: grid; width: 17px; height: 17px; place-items: center; border-radius: 50%; background: #e0ecdf; color: var(--green); font-size: 9px; font-weight: 800; }
+.note-check { display: grid; width: 18px; height: 18px; flex: none; place-items: center; border: 1px solid #d6e4d3; border-radius: 50%; background: #e6efe2; color: #2e694b; }
+.note-check svg { width: 10px; height: 10px; overflow: visible; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .hero-art { position: relative; display: grid; min-width: 0; min-height: 530px; place-items: center; }
 .art-halo { position: absolute; width: min(95%, 570px); aspect-ratio: 1; border: 1px solid rgba(116, 150, 112, .2); border-radius: 50%; background: radial-gradient(circle, rgba(224, 235, 219, .60) 0%, rgba(244, 246, 239, .18) 60%, transparent 61%); }
 .dashboard-preview { position: relative; z-index: 1; width: min(100%, 555px); overflow: hidden; border: 1px solid rgba(216, 225, 212, .95); border-radius: 19px; background: #fffefa; box-shadow: 0 28px 70px rgba(54, 76, 59, .15), 0 4px 13px rgba(54, 76, 59, .06); transform: rotate(-1.15deg); }
@@ -134,7 +135,7 @@ button { font: inherit; }
 .step { display: grid; grid-template-columns: 42px 14px minmax(0, 1fr); align-items: start; gap: 13px; }
 .step-number { display: grid; width: 37px; height: 37px; place-items: center; border: 1px solid #ccdac9; border-radius: 50%; background: #f5f7f1; color: #547452; font-family: var(--font-display); font-size: 10px; font-weight: 800; }
 .step-line { position: relative; display: block; width: 1px; height: calc(100% + 23px); min-height: 42px; justify-self: center; background: #cad8c7; }
-.step:last-child .step-line { display: none; }
+.step:last-child .step-line { visibility: hidden; }
 .step h3 { margin: 1px 0 5px; color: #364538; font-family: var(--font-display); font-size: 14px; font-weight: 700; }
 .step p { max-width: 370px; margin: 0; color: #798577; font-size: 10px; line-height: 1.7; }
 .how-decoration { position: absolute; right: -88px; bottom: -83px; color: rgba(91, 129, 88, .08); font-size: 210px; line-height: 1; }
