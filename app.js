@@ -207,7 +207,7 @@
     const effectiveTheme = themeMode === 'system' ? (systemThemeQuery.matches ? 'dark' : 'light') : themeMode;
     document.documentElement.dataset.theme = themeMode;
     document.documentElement.dataset.colorScheme = effectiveTheme;
-    $('meta[name="theme-color"]').content = effectiveTheme === 'dark' ? '#171e19' : '#f7f7f2';
+    $('meta[name="theme-color"]').content = effectiveTheme === 'dark' ? '#000000' : '#fafafa';
     $$('.theme-choice').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.theme === themeMode)));
   }
   function initials(name) { const value = String(name || '?').trim(); if (/^[+\d\s().-]+$/.test(value) && value.replace(/\D/g, '').length >= 10) return '☎'; return value.split(/\s+/).slice(0, 2).map(part => part[0] || '').join('').toUpperCase(); }
