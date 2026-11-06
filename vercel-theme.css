@@ -279,7 +279,6 @@ textarea:focus-visible,
 /* Primary actions */
 .add-button,
 .button-primary,
-.add-customer-button,
 .auth-submit,
 .plan-card-cta,
 .plan-upgrade-button,
@@ -289,16 +288,6 @@ textarea:focus-visible,
   border-color: var(--primary) !important;
   box-shadow: var(--shadow) !important;
 }
-.add-customer-leading {
-  background: var(--primary) !important;
-}
-.add-customer-leading svg path {
-  stroke: var(--primary-foreground) !important;
-}
-.add-customer-label {
-  color: var(--primary-foreground) !important;
-}
-.add-customer-button:hover,
 .add-button:hover,
 .button-primary:hover,
 .auth-submit:hover,
@@ -306,21 +295,11 @@ textarea:focus-visible,
 .plan-upgrade-button:hover {
   filter: brightness(.92);
 }
-.add-customer-button:focus-visible,
 .auth-submit:focus-visible,
 .plan-card-cta:focus-visible,
 .plan-upgrade-button:focus-visible {
   outline: 2px solid var(--ring) !important;
   outline-offset: 2px;
-}
-.add-customer-button {
-  --ac-card: var(--card);
-  --ac-foreground: var(--foreground);
-  --ac-primary: var(--primary);
-  --ac-primary-foreground: var(--primary-foreground);
-  --ac-accent: var(--accent);
-  --ac-border: var(--border);
-  --ac-ring: var(--ring);
 }
 button,
 input,
@@ -510,6 +489,11 @@ textarea {
 .mobile-nav-link.active,
 .mobile-nav-link.active span {
   color: var(--foreground) !important;
+}
+
+/* Keep the add-customer button typography from its original component stylesheet. */
+.add-customer-button {
+  font-family: 'DM Sans', sans-serif;
 }
 
 /* Dynamic customer avatars carry inline colors; keep them in the same palette. */
