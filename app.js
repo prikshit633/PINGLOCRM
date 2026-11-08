@@ -27,6 +27,7 @@
   const FREE_CUSTOMER_LIMIT = 15;
   const FREE_TEMPLATE_LIMIT = 2;
   let billingCycle = 'monthly';
+  let checkoutInProgress = false;
   let workspacePlan = { tier: 'free', validUntil: null };
   const statuses = ['New', 'Contacted', 'Interested', 'Confirmed', 'Completed'];
   const templateDefaults = [
@@ -232,7 +233,82 @@
     return parseDate(workspacePlan.validUntil) >= today;
   }
   function activeContactCount() { return customers.filter(customer => customer.status !== 'Completed').length; }
-  function showPlansComingSoon() { showToast(t('Pro upgrades are coming soon. Razorpay will be added later.')); }
+  async function startProCheckout() {
+    if (checkoutInProgress) return;
+    if (!supabase || !currentUser) { showToast(t('Sign in to continue to checkout.')); return; }
+    if (typeof window.Razorpay !== 'function') { showToast(t('Secure checkout could not load. Please try again.')); return; }
+
+    checkoutInProgress = true;
+    renderPlanPage();
+    let checkoutFinalizing = false;
+    try {
+      const { data, error } = await supabase.auth.getSession();
+      if (error || !data.session?.access_token) throw new Error(t('Your session has expired. Sign in again.'));
+      const orderResponse = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + data.session.access_token },
+        body: JSON.stringify({ cycle: billingCycle })
+      });
+      const orderPayload = await orderResponse.json().catch(() => ({}));
+      if (!orderResponse.ok) throw new Error(orderPayload.error || t('Could not start checkout. Please try again.'));
+      if (!orderPayload.order_id || !orderPayload.key_id || !orderPayload.amount) throw new Error(t('Could not start checkout. Please try again.'));
+
+      const checkout = new window.Razorpay({
+        key: orderPayload.key_id,
+        amount: orderPayload.amount,
+        currency: orderPayload.currency,
+        name: 'Pinglo',
+        description: orderPayload.cycle === 'annual' ? 'Premium Pro · 365 days' : 'Premium Pro · 30 days',
+        order_id: orderPayload.order_id,
+        prefill: { name: profile.ownerName, email: currentUser.email || '' },
+        theme: { color: document.documentElement.dataset.colorScheme === 'dark' ? '#ffffff' : '#000000' },
+        modal: {
+          ondismiss: () => {
+            if (checkoutFinalizing) return;
+            checkoutInProgress = false;
+            renderPlanPage();
+            showToast(t('Payment cancelled.'));
+          }
+        },
+        handler: async payment => {
+          checkoutFinalizing = true;
+          try {
+            const { data: currentSession, error: sessionError } = await supabase.auth.getSession();
+            if (sessionError || !currentSession.session?.access_token) throw new Error('Your session expired during checkout. Sign in again and contact support with your Razorpay receipt.');
+            const verifyResponse = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + currentSession.session.access_token },
+              body: JSON.stringify(payment)
+            });
+            const verifyPayload = await verifyResponse.json().catch(() => ({}));
+            if (!verifyResponse.ok || verifyPayload.verified !== true) {
+              throw new Error(verifyPayload.error || 'Payment could not be confirmed. Please contact support before trying again.');
+            }
+            await loadCloudData(currentUser);
+            showToast(verifyPayload.valid_until
+              ? t('Premium Pro is active until {date}', { date: prettyDate(verifyPayload.valid_until) })
+              : t('Premium Pro payment verified.'));
+          } catch (error) {
+            console.error('Pinglo payment verification could not complete', error);
+            showToast(error.message || t('Payment could not be confirmed. Please contact support.'));
+          } finally {
+            checkoutInProgress = false;
+            renderPlanPage();
+          }
+        }
+      });
+      checkout.on('payment.failed', () => {
+        checkoutInProgress = false;
+        renderPlanPage();
+        showToast(t('Payment failed. Please try again.'));
+      });
+      checkout.open();
+    } catch (error) {
+      checkoutInProgress = false;
+      renderPlanPage();
+      showToast(error.message || t('Could not start checkout. Please try again.'));
+    }
+  }
   function transitionBillingText(element, value) {
     if (!element || element.textContent === value) return;
     element.textContent = value;
@@ -522,8 +598,11 @@
     }
     const proBtn = $('#btn-upgrade-pro');
     if (proBtn) {
-      proBtn.disabled = true;
-      proBtn.textContent = t(pro ? 'Your current plan' : 'Pro upgrades coming soon');
+      const price = monthly ? '₹299' : '₹2,499';
+      proBtn.disabled = checkoutInProgress;
+      proBtn.textContent = checkoutInProgress
+        ? t('Opening secure checkout…')
+        : t(pro ? 'Extend Premium Pro · {price}' : 'Pay {price} with Razorpay', { price });
     }
     if ($('#plan-badge-name')) {
       $('#plan-badge-name').textContent = t(pro ? 'Premium Pro' : 'Free Starter');
@@ -962,7 +1041,7 @@
   });
   $('#btn-billing-monthly')?.addEventListener('click', () => { billingCycle = 'monthly'; renderPlanPage(); });
   $('#btn-billing-annual')?.addEventListener('click', () => { billingCycle = 'annual'; renderPlanPage(); });
-  $('#btn-upgrade-pro')?.addEventListener('click', showPlansComingSoon);
+  $('#btn-upgrade-pro')?.addEventListener('click', startProCheckout);
   $('#plan-upgrade-button')?.addEventListener('click', () => { closeProfileMenu(); navigate('plans'); });
 
   applyLocale();
