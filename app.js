@@ -262,6 +262,15 @@
         order_id: orderPayload.order_id,
         prefill: { name: profile.ownerName, email: currentUser.email || '' },
         theme: { color: document.documentElement.dataset.colorScheme === 'dark' ? '#ffffff' : '#000000' },
+        config: {
+          display: {
+            blocks: {
+              upi_only: { name: 'Pay via UPI', instruments: [{ method: 'upi' }] }
+            },
+            sequence: ['block.upi_only'],
+            preferences: { show_default_blocks: false }
+          }
+        },
         modal: {
           ondismiss: () => {
             if (checkoutFinalizing) return;
