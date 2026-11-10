@@ -808,7 +808,7 @@
       message
     ].join('\n');
     status.textContent = t('Your email app should open. Review the draft and press Send.');
-    window.location.href = `mailto:prikshitcanva@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:support-pinglocrm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
   function renderAll() { renderStats(); renderFollowups(); renderCustomers(); renderProfile(); }
   function navigate(page) {
