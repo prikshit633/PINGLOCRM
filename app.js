@@ -792,23 +792,52 @@
       return `<article class="template-card${locked ? ' template-card-locked' : ''}" data-template-index="${index}"><div class="template-card-head"><span class="template-title"><span class="template-icon">${escapeHTML(template.icon)}</span>${escapeHTML(name)}</span><button class="${locked ? 'button-quiet template-unlock' : 'button-primary template-send'}" type="button" data-send-template="${index}">${escapeHTML(t(locked ? 'Upgrade to Pro' : 'Send message'))}</button></div><textarea data-template-text="${index}" aria-label="${escapeHTML(t('{name} message', { name }))}" maxlength="600"${locked ? ' disabled' : ''}>${escapeHTML(template.text)}</textarea><div class="template-hint"><span>${escapeHTML(t(locked ? 'Upgrade to Pro to use and edit this template' : 'Use {{name}} to personalize'))}</span><span class="char-count">${template.text.length}/600</span></div></article>`;
     }).join('');
   }
-  function submitFeedback(event) {
+  async function submitFeedback(event) {
     event.preventDefault();
+    const formElement = $('#feedback-form');
     const status = $('#feedback-status');
+    const submitButton = $('#feedback-submit');
     const message = $('#feedback-message').value.trim();
     const category = $('#feedback-category').value;
-    if (message.length < 10 || message.length > 1500 || !['suggestion', 'issue', 'other'].includes(category)) return;
-    const categoryNames = { suggestion: 'Suggestion', issue: 'Report a problem', other: 'Other feedback' };
-    const subject = `Pinglo feedback: ${categoryNames[category]}`;
-    const body = [
-      `Feedback type: ${categoryNames[category]}`,
-      `Business: ${profile.businessName || 'Not provided'}`,
-      `Account email: ${currentUser?.email || 'Not provided'}`,
-      '',
-      message
-    ].join('\n');
-    status.textContent = t('Your email app should open. Review the draft and press Send.');
-    window.location.href = `mailto:support-pinglocrm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const website = $('#feedback-website')?.value.trim() || '';
+    if (message.length < 10 || message.length > 1500 || !['suggestion', 'issue', 'other'].includes(category)) {
+      status.textContent = t('Please enter a message between 10 and 1500 characters.');
+      return;
+    }
+    if (!supabase) {
+      status.textContent = t('Sign in with your Pinglo account to send feedback.');
+      return;
+    }
+    const originalLabel = submitButton.textContent;
+    submitButton.disabled = true;
+    status.textContent = t('Sending feedback...');
+    try {
+      const { data, error: sessionError } = await supabase.auth.getSession();
+      const accessToken = data?.session?.access_token;
+      if (sessionError || !accessToken) throw new Error(t('Please sign in again to send feedback.'));
+      const response = await fetch('/api/send-feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + accessToken
+        },
+        body: JSON.stringify({
+          category,
+          message,
+          businessName: profile.businessName || '',
+          website
+        })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || t('Could not send your message. Please try again.'));
+      formElement.reset();
+      status.textContent = t('Your message was sent to pinglocrm@gmail.com.');
+    } catch (error) {
+      status.textContent = t(error?.message || 'Could not send your message. Please try again.');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalLabel;
+    }
   }
   function renderAll() { renderStats(); renderFollowups(); renderCustomers(); renderProfile(); }
   function navigate(page) {

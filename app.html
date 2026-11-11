@@ -366,6 +366,7 @@
         </div>
         <div class="feedback-layout">
           <form class="feedback-card" id="feedback-form">
+            <input id="feedback-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px">
             <label class="field-label" for="feedback-category">What would you like to share?
               <select id="feedback-category" name="category">
                 <option value="suggestion">Suggestion</option>
@@ -379,15 +380,14 @@
             </label>
             <p class="feedback-help">Please don’t include passwords or private customer details.</p>
             <div class="feedback-submit-row"><span class="feedback-status" id="feedback-status" role="status"
-                aria-live="polite"></span><button class="button-primary" id="feedback-submit" type="submit">Open email
-                draft</button></div>
+                aria-live="polite"></span><button class="button-primary" id="feedback-submit" type="submit">Send feedback</button></div>
           </form>
           <aside class="feedback-info-card">
             <span class="feedback-info-icon">✉</span>
             <h2>Send us a note</h2>
-            <p>We’ll open an email draft addressed to <strong><a href="mailto:support-pinglocrm@gmail.com">support-pinglocrm@gmail.com</a></strong>.</p>
+            <p>Your message will be sent directly from Pinglo to <strong>pinglocrm@gmail.com</strong>.</p>
             <p>Your business name and account email will be included so we can understand the context. Review or edit
-              the draft, then press <strong>Send</strong>.</p>
+              the message will include your business name and account email.</p>
           </aside>
         </div>
       </section>
@@ -496,7 +496,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
   <script src="locales.js?v=20261019-1"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="app.js?v=20261108-2"></script>
+  <script src="app.js?v=20261111-1"></script>
 </body>
 
 </html>
