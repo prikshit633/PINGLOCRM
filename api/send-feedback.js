@@ -96,7 +96,15 @@ module.exports = async function sendFeedback(req, res) {
     });
     return json(res, 200, { ok: true });
   } catch (error) {
-    console.error('Pinglo feedback email failed:', error?.code || error?.responseCode || 'unknown error');
+    const smtpResponse = String(error?.response || '')
+      .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, '[email]')
+      .slice(0, 180);
+    console.error('Pinglo feedback email failed:', JSON.stringify({
+      code: error?.code || 'unknown',
+      responseCode: Number(error?.responseCode) || null,
+      command: error?.command || null,
+      response: smtpResponse
+    }));
     return json(res, 502, { error: 'Pinglo could not send your message. Please try again later.' });
   }
 };
